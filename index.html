@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#080b16">
   <title>Physics Arena — Battle Lab</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css">\n  <link rel="stylesheet" href="asb.css">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="#" aria-label="Physics Arena home"><span class="brand-mark">P</span><span>PHYSICS<span class="accent"> ARENA</span><small>BATTLE LAB</small></span></a>
-    <div class="top-actions"><span class="live-dot"></span><span id="statusLabel">SIMULATION READY</span><button id="pauseBtn" class="quiet">Ⅱ Pause</button><button id="resetBtn" class="quiet">↻ Reset</button></div>
+    <div class="top-actions"><button id="asbOpen" class="asb-open">✦ Advanced Skill Builder</button><span class="live-dot"></span><span id="statusLabel">SIMULATION READY</span><button id="pauseBtn" class="quiet">Ⅱ Pause</button><button id="resetBtn" class="quiet">↻ Reset</button></div>
   </header>
   <main class="layout">
     <aside class="sidebar">
@@ -53,6 +53,25 @@
     </section>
   </main>
   <footer>PHYSICS ARENA <span>·</span> BUILD, TEST, REPEAT <span class="footer-note">Prototype foundation — more studio tools coming in stages</span></footer>
+  <div id="asbBackdrop" class="asb-backdrop" aria-hidden="true">
+    <section class="asb-window" role="dialog" aria-modal="true" aria-label="Advanced Skill Builder">
+      <header class="asb-top">
+        <div class="asb-brand"><strong>ADVANCED SKILL BUILDER</strong><small>Build unusual abilities without UI overlap</small></div>
+        <div class="asb-top-actions"><button id="asbShowLibrary" class="asb-btn asb-mobile-label">Blocks</button><button id="asbShowSettings" class="asb-btn asb-mobile-label">Settings</button><button id="asbImportButton" class="asb-btn" onclick="document.getElementById('asbImport').click()">Import</button><input id="asbImport" type="file" accept="application/json,.json" hidden><button id="asbSave" class="asb-btn primary">Export ability</button><button id="asbReset" class="asb-btn">New draft</button><button id="asbClose" class="asb-btn danger">Exit ×</button></div>
+      </header>
+      <nav class="asb-tabs" aria-label="Editor views"><button class="asb-tab" data-tab="blocks" aria-selected="true">Block Workshop</button><button class="asb-tab" data-tab="code" aria-selected="false">Custom Code</button><button class="asb-tab" data-tab="preview" aria-selected="false">Preview</button></nav>
+      <div id="asbWorkspace" class="asb-workspace">
+        <aside class="asb-pane"><h3>BLOCK LIBRARY</h3><input id="asbSearch" class="asb-search" placeholder="Search blocks…" aria-label="Search blocks"><div id="asbCategoryList" class="asb-cats"></div><div id="asbBlockList" class="asb-block-list"></div><p class="asb-hint">Add as many blocks as you need. Reorder with arrows. Each block's parameters are editable.</p></aside>
+        <section class="asb-pane"><div class="asb-canvas-head"><strong>ABILITY FLOW</strong><span class="asb-hint">Top → bottom execution order</span></div><div id="asbGraph" class="asb-graph"></div></section>
+        <aside class="asb-pane"><h3>PROPERTIES</h3><div id="asbSelection" class="asb-side-section"></div><div class="asb-side-section"><h4>VISUAL PREVIEW</h4><canvas id="asbPreviewCanvas" class="asb-preview" aria-label="Ability visual preview"></canvas><button id="asbPreviewRefresh" class="asb-btn" style="width:100%;margin-top:8px">Refresh preview</button><p class="asb-hint">This canvas previews visual intent. It does not yet apply custom abilities to live Fighters.</p></div><div class="asb-side-section"><h4>EDITOR STATUS</h4><p id="asbLastNode">Ready</p></div></aside>
+      </div>
+      <section id="asbCodePanel" class="asb-code"><div class="asb-code-note"><strong>Advanced code workspace</strong><br>Write and export your custom JavaScript logic here. For safety, this prototype does not execute arbitrary code or connect it to the battle simulation yet. Exported ability files preserve this source.</div><textarea id="asbCodeEditor" spellcheck="false" aria-label="Custom ability JavaScript">// Optional advanced logic. This is exported as source; it is not executed automatically.
+// Add visual blocks to define behavior in the safe editor.</textarea></section>
+      <section id="asbPreviewPanel" class="asb-code"><h3>ABILITY PREVIEW</h3><canvas id="asbPreviewCanvasDuplicate" class="asb-preview" aria-label="Ability preview"></canvas><p class="asb-hint">Preview is illustrative only; it does not modify the live simulation.</p></section>
+      <footer class="asb-status"><span id="asbStatusText" role="status">Ready · draft only</span><span>Prototype · export JSON to save your work</span></footer>
+    </section>
+  </div>
   <script src="game.js"></script>
+  <script src="asb.js"></script>
 </body>
 </html>
