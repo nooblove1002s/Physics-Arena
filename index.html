@@ -40,6 +40,10 @@
         <button class="weapon" data-weapon="thorns"><span>♢</span>Thorns</button>
         <button class="weapon" data-weapon="lightning"><span>ϟ</span>Lightning</button>
       </div>
+      <label class="field-label" for="weaponSizeInput">Weapon visual size <output id="weaponSizeValue">1.0×</output></label><input id="weaponSizeInput" type="range" min="0.5" max="3" value="1" step="0.1">
+      <label class="field-label" for="weaponLengthInput">Weapon length <output id="weaponLengthValue">90</output></label><input id="weaponLengthInput" type="range" min="20" max="240" value="90" step="5">
+      <label class="field-label" for="hitboxSizeInput">Hitbox width / radius <output id="hitboxSizeValue">24</output></label><input id="hitboxSizeInput" type="range" min="4" max="100" value="24" step="2">
+      <p class="hint">Visual size changes appearance. Hitbox width changes collision separately.</p>
       <label class="field-label" for="rangeInput">Ability range <output id="rangeValue">280</output></label><input id="rangeInput" type="range" min="40" max="600" value="280" step="10">
       <label class="field-label" for="cooldownInput">Cooldown (seconds)</label><input id="cooldownInput" type="number" min="0" step=".25" value="1">
       <label class="field-label" for="repeatSelect">Repeat-hit behavior</label><select id="repeatSelect"><option value="once">Once per target / activation</option><option value="ticks">Damage ticks while active</option><option value="repeat">Repeat after cooldown</option></select>
