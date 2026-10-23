@@ -28,7 +28,7 @@
       ["Energy beam visual","effect",{visual:"beam",color:"#54f6ff",width:24,life:0.5}],["Explosion visual","effect",{visual:"explosion",color:"#ffad5c",radius:100}],["Particles","effect",{visual:"particles",count:24,color:"#b19aff"}],["Screen shake","effect",{amount:5,duration:0.2}],["Sound cue","effect",{sound:"impact"}],["Custom shape","effect",{visual:"shape",shape:"star"}]
     ],
     Physics: [
-      ["Set velocity","physics",{vx:0,vy:0}],["Add velocity","physics",{vx:100,vy:0}],["Set gravity","physics",{gravity:0}],["Damage multiplier","physics",{multiplier:2}],["Reflect velocity","physics",{reflect:true}],["Teleport","physics",{teleport:true}]
+      ["Set velocity","physics",{vx:0,vy:0}],["Add velocity","physics",{vx:100,vy:0}],["Set gravity","physics",{gravity:0}],["Damage multiplier","physics",{multiplier:2}],["Reflect velocity","physics",{reflect:true}],["Teleport","physics",{teleport:true}],["Set weapon geometry","physics",{visualSize:1,length:90,hitboxWidth:24}]
     ]
   };
   const defaults = {
@@ -89,7 +89,7 @@
   $("asbSearch").addEventListener("input",renderLibrary);
   graph.addEventListener("click",e=>{const del=e.target.closest("[data-delete]");if(del){ability.nodes=ability.nodes.filter(n=>n.id!==Number(del.dataset.delete));renderGraph();renderSettings();renderPreview();setStatus("Block removed");return;}const move=e.target.closest("[data-move]");if(move){const i=ability.nodes.findIndex(n=>n.id===Number(move.dataset.id)),j=i+Number(move.dataset.move);if(i<0||j<0||j>=ability.nodes.length)return;[ability.nodes[i],ability.nodes[j]]=[ability.nodes[j],ability.nodes[i]];renderGraph();renderPreview();}});
   graph.addEventListener("change",e=>{const el=e.target.closest("[data-param]");if(!el)return;const n=ability.nodes.find(n=>n.id===Number(el.dataset.node));if(!n)return;let v=el.value;if(v==="true"||v==="false")v=v==="true";else if(v.trim()!==""&&Number.isFinite(Number(v))&&el.type==="number")v=Number(v);n.params[el.dataset.param]=v;renderPreview();setStatus("Block settings updated");});
-  $("asbSave").addEventListener("click",()=>{syncMeta();exportJSON();});
+  $("asbSave").addEventListener("click",()=>{syncMeta();exportJSON();});\n  $("asbTestArena").addEventListener("click",()=>{syncMeta();window.dispatchEvent(new CustomEvent("physics-arena:asb-test",{detail:structuredClone(ability)}));setStatus("Sent ability to the live arena test handler");});
   $("asbReset").addEventListener("click",()=>{if(!confirm("Replace this draft with a fresh example? Export your work first if you want to keep it."))return;ability=structuredClone(defaults);nextId=5;render();setStatus("Fresh draft loaded");});
   $("asbImport").addEventListener("change",async e=>{const file=e.target.files?.[0];if(!file)return;try{const parsed=JSON.parse(await file.text());if(!parsed||!Array.isArray(parsed.nodes)||parsed.nodes.length>500)throw new Error("Invalid ability file");ability={...structuredClone(defaults),...parsed,nodes:parsed.nodes.map((n,i)=>({...n,id:Number.isFinite(n.id)?n.id:i+1,params:n.params&&typeof n.params==="object"?n.params:{}}))};nextId=Math.max(1,...ability.nodes.map(n=>n.id))+1;render();setStatus("Ability imported. Review before using it.");}catch(err){setStatus("Import failed: "+err.message);}e.target.value="";});
   document.querySelectorAll(".asb-tab").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
