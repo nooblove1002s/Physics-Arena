@@ -107,7 +107,9 @@
   ui.knockback.addEventListener("input",()=>ui.knockbackValue.textContent=Number(ui.knockback.value).toFixed(1)+"×");
   ui.speed.addEventListener("input",()=>ui.speedValue.textContent=Number(ui.speed.value).toFixed(2).replace(/0$/,"")+"×");
   ui.range.addEventListener("input",()=>{ui.rangeValue.textContent=ui.range.value;draw();});
-  ui.weaponSize?.addEventListener("input",()=>{ui.weaponSizeValue.textContent=Number(ui.weaponSize.value).toFixed(1)+"×";draw();});\n  ui.weaponLength?.addEventListener("input",()=>{ui.weaponLengthValue.textContent=ui.weaponLength.value;draw();});\n  ui.hitboxSize?.addEventListener("input",()=>{ui.hitboxSizeValue.textContent=ui.hitboxSize.value;draw();});
+  ui.weaponSize?.addEventListener("input",()=>{ui.weaponSizeValue.textContent=Number(ui.weaponSize.value).toFixed(1)+"×";draw();});
+  ui.weaponLength?.addEventListener("input",()=>{ui.weaponLengthValue.textContent=ui.weaponLength.value;draw();});
+  ui.hitboxSize?.addEventListener("input",()=>{ui.hitboxSizeValue.textContent=ui.hitboxSize.value;draw();});
   ui.hp.addEventListener("change",()=>{const f=selected();if(f)setHP(f,big(ui.hp.value));});
   ui.damage.addEventListener("change",()=>{const f=selected();if(f)f.damage=Math.max(0,Number(ui.damage.value)||0);});
   ui.god.addEventListener("change",()=>toast(ui.god.checked?"God Mode enabled":"God Mode disabled"));
