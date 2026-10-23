@@ -21,7 +21,7 @@
   const rand = (a,b) => a + Math.random() * (b-a);
   const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
   const big = (value) => { try { let s=String(value).replace(/[,_\s]/g,""); if (!/^\+?\d+$/.test(s)) return 100n; return BigInt(s); } catch { return 100n; } };
-  const showBig = (n) => { const s = (typeof n === "bigint" ? n : BigInt(n)).toString(); if(s.length<=7)return s; return s.slice(0,3)+"."+s.slice(3,5)+"e"+(s.length-1); };
+  const showBig = (n) => { const s = (typeof n === "bigint" ? n : BigInt(n)).toString(); if(s.length<=7)return s; return s[0]+"."+(s.slice(1,3)||"00")+"e"+(s.length-1); };
   const alive = () => fighters.filter(f=>f.alive);
   const selected = () => fighters.find(f=>f.id===selectedId && f.alive) || alive()[0] || null;
   function resize() {
