@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b16">
+  <title>Physics Arena — Battle Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Physics Arena home"><span class="brand-mark">P</span><span>PHYSICS<span class="accent"> ARENA</span><small>BATTLE LAB</small></span></a>
+    <div class="top-actions"><span class="live-dot"></span><span id="statusLabel">SIMULATION READY</span><button id="pauseBtn" class="quiet">Ⅱ Pause</button><button id="resetBtn" class="quiet">↻ Reset</button></div>
+  </header>
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="eyebrow">BATTLE CONFIGURATION</div>
+      <label class="field-label" for="modeSelect">Game mode</label>
+      <select id="modeSelect"><option value="duel">1v1 Duel</option><option value="ffa">Free-for-all</option><option value="raid">Raid waves</option><option value="juggernaut">Juggernaut</option><option value="sandbox">Sandbox</option></select>
+      <div class="button-row"><button id="startBtn" class="primary">▶ Start battle</button><button id="addBtn" class="secondary">＋ Fighter</button></div>
+      <div class="divider"></div>
+      <div class="section-head"><h2>FIGHTER STATS</h2><span class="pill">LIVE</span></div>
+      <label class="field-label" for="hpInput">Selected fighter HP</label><input id="hpInput" type="number" value="100" min="1">
+      <label class="field-label" for="damageInput">Damage</label><input id="damageInput" type="number" value="20" min="0">
+      <label class="field-label" for="knockbackInput">Knockback <output id="knockbackValue">1.0×</output></label><input id="knockbackInput" type="range" min="0" max="5" value="1" step=".1">
+      <label class="field-label" for="speedInput">Simulation speed <output id="speedValue">1.0×</output></label><input id="speedInput" type="range" min=".25" max="3" value="1" step=".25">
+      <div class="divider"></div>
+      <div class="section-head"><h2>GOD MODE</h2><label class="switch"><input id="godMode" type="checkbox"><span></span></label></div>
+      <p class="hint">Allow extreme stats in every mode. Values are not artificially capped by the game UI.</p>
+      <label class="field-label" for="godHp">God HP</label><input id="godHp" type="text" value="7873267223722823787847" inputmode="numeric">
+      <button id="applyGod" class="secondary full">Apply to selected fighter</button>
+      <div class="divider"></div>
+      <div class="section-head"><h2>WEAPON LAB</h2><span class="pill cyan">PREVIEW</span></div>
+      <div class="weapon-grid">
+        <button class="weapon active" data-weapon="sword"><span>⚔</span>Sword</button>
+        <button class="weapon" data-weapon="beam"><span>ϟ</span>Energy beam</button>
+        <button class="weapon" data-weapon="explosion"><span>✹</span>Explosion</button>
+        <button class="weapon" data-weapon="blackhole"><span>◉</span>Black hole</button>
+        <button class="weapon" data-weapon="thorns"><span>♢</span>Thorns</button>
+        <button class="weapon" data-weapon="lightning"><span>ϟ</span>Lightning</button>
+      </div>
+      <label class="field-label" for="rangeInput">Ability range <output id="rangeValue">280</output></label><input id="rangeInput" type="range" min="40" max="600" value="280" step="10">
+      <label class="field-label" for="cooldownInput">Cooldown (seconds)</label><input id="cooldownInput" type="number" min="0" step=".25" value="1">
+      <label class="field-label" for="repeatSelect">Repeat-hit behavior</label><select id="repeatSelect"><option value="once">Once per target / activation</option><option value="ticks">Damage ticks while active</option><option value="repeat">Repeat after cooldown</option></select>
+      <button id="fireBtn" class="primary full">✦ Trigger ability</button>
+    </aside>
+    <section class="arena-column">
+      <div class="arena-heading"><div><div class="eyebrow">LIVE SIMULATION</div><h1>The Arena</h1><p>Space-like movement · Wall bounce · Visible hit effects</p></div><div class="wave-card"><span id="waveLabel">WAVE</span><strong id="waveNumber">01</strong></div></div>
+      <div class="arena-frame"><canvas id="arena" aria-label="Physics battle arena"></canvas><div class="canvas-hud"><span><i class="legend cyan-dot"></i> BLUE TEAM</span><span><i class="legend orange-dot"></i> ORANGE TEAM</span><span id="arenaState">READY</span></div><div id="toast" class="toast" role="status"></div></div>
+      <div class="stats-grid"><div class="stat-card"><span>FIGHTERS ALIVE</span><strong id="aliveCount">2</strong></div><div class="stat-card"><span>HITS LANDED</span><strong id="hitCount">0</strong></div><div class="stat-card"><span>DAMAGE DEALT</span><strong id="damageCount">0</strong></div><div class="stat-card"><span>WAVE STATUS</span><strong id="waveStatus">Standby</strong></div></div>
+      <div class="lower-grid"><section class="panel"><div class="panel-title"><h2>COMBAT EVENT LOG</h2><span class="pill">LIVE FEED</span></div><div id="eventLog" class="event-log"><div class="empty-state">Battle events will appear here. Every hit includes a source and cause.</div></div></section>
+      <section class="panel"><div class="panel-title"><h2>ASB · BLOCK WORKSHOP</h2><span class="pill cyan">BETA</span></div><p class="hint">Prototype ability recipe. Preview the selected effect, then trigger it in the arena.</p><label class="field-label" for="blockAction">When triggered</label><select id="blockAction"><option value="beam">Fire energy beam</option><option value="explosion">Create explosion</option><option value="lightning">Chain lightning</option><option value="blackhole">Create black hole</option><option value="thorns">Activate thorns</option></select><label class="field-label" for="blockDamage">Damage per hit</label><input id="blockDamage" type="number" value="20" min="0"><div class="block-row"><span class="block-node">EVENT · Ability activated</span><span class="block-arrow">↓</span><span class="block-node active-node" id="blockPreview">ATTACK · Energy beam</span><span class="block-arrow">↓</span><span class="block-node">HITBOX · Apply damage + knockback</span></div><button id="runBlock" class="secondary full">▷ Run block recipe</button></section></div>
+    </section>
+  </main>
+  <footer>PHYSICS ARENA <span>·</span> BUILD, TEST, REPEAT <span class="footer-note">Prototype foundation — more studio tools coming in stages</span></footer>
+  <script src="game.js"></script>
+</body>
+</html>
