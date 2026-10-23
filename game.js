@@ -13,7 +13,7 @@
     waveStatus: $("waveStatus"), log: $("eventLog"), toast: $("toast"), blockAction: $("blockAction"),
     blockDamage: $("blockDamage"), blockPreview: $("blockPreview"), runBlock: $("runBlock")
   };
-  const colors = { blue: "#49e6f2", orange: "#ff9b54", purple: "#b19aff", green: "#70f0b0" };
+  const colors = { blue: "#49e6f2", cyan: "#49e6f2", orange: "#ff9b54", purple: "#b19aff", green: "#70f0b0" };
   let W = 900, H = 500, running = true, started = false, selectedId = 1, nextId = 1;
   let fighters = [], effects = [], hitCount = 0, damageTotal = 0, wave = 1, waveSpawned = 0;
   let weapon = "sword", lastTime = 0, elapsed = 0, nextRaidSpawn = 0, waveWait = 0, cooldownUntil = 0, lastTickAt = 0;
